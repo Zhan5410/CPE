@@ -1,0 +1,36 @@
+#include <iostream>		//io資料庫
+#include <sstream>		//string stream
+#include <vector>		//向量資料庫,類似link-list
+using namespace std;
+
+int main(){
+	int x = 0;		//輸入
+	while(cin >> x){
+		long long sum = 0;	//宣告long long 因為題目提示了答案最大可能2^32
+		string s = "";
+		vector<int> v;
+		v.clear();		//初始化清空
+		getline(cin,s);		//要寫兩次 , getline 跟 cin 互不干擾 ,這一行 getline 會讀到 x 的值
+		getline(cin,s);		//這一行才開始讀多項式係數
+		stringstream ss(s);	//分割
+		
+		while(ss >> s){
+			v.push_back(stoi(s));	//存入v , stoi -> string to int , 轉型用
+		}
+		
+		if(v.size() == 1){
+			cout << "0" << endl;	//如果多項式長度 ==1(只有常數) , 常數微分等於0 , 直接輸出
+		}
+		else{
+			long long pow = 1;	//pow 即x目前幾次方 , pow = pow*x = 直接把X帶入了 pow(pow,x)
+			for(int i=1 ; i<v.size() ; i++){	//注意 i 從1開始
+				sum = sum + i * pow * v[v.size()-i-1];		//當前次方 * pow(pow,x) * 多項式係數 , v[v.size -i - 1] 是從後面數回來
+				pow = pow*x;
+			}
+			cout << sum << endl;
+		}
+		
+	}
+	
+	return 0;
+}

@@ -1,0 +1,22 @@
+#include <iostream>		//io stream , io資料庫
+#include <map>			//map 資料庫
+#include <sstream>		//string stream , string資料庫
+using namespace std;
+
+int main(){
+	map<string,int> maps;	//宣告map物件 , index為string放國家 , 內容為int放次數
+	string data = "";	//輸入
+	string country = "";	//讀取第一個string(國家)
+	
+	getline(cin,data);	//函式,cin遇到空格中斷 , getline則遇到換行中斷
+	while(getline(cin,data)){	//讀取輸入
+		stringstream ss(data);	//可將上面getline讀進來的string以空格做切斷 , 影片14:19
+		ss >> country;		//切斷後的第一個string(即國家)存入country
+		maps[country]++;	//用國家做index , 直接 +1 即可代表出現次數
+	}
+	for(auto mp:maps){	//輸出 , auto mp 為宣告一個叫mp的物件(mp可任意取名) , 指向maps , maps空時結束迴圈
+			cout << mp.first << " " << mp.second << endl;		//mp.first -> maps的第一個欄位
+	}									//mp.second -> maps的第二個欄位
+	
+	return 0;
+}
