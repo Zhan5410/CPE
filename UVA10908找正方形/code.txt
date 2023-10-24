@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+	int M = 0;		//有幾行
+	int N = 0;		//有幾列
+	int T = 0;		//有幾題
+	int Q = 0;		//有幾個中心點座標
+	int r = 0;		//中心點X座標
+	int c = 0;		//中心點Y座標
+	char field[101][101];	//陣列,題目最大為[100][100],故宣告[101][101]
+	bool flag = false;	//旗標
+	
+	cin >> T;		//讀取題目
+	while(T--){
+		cin >> M >> N >> Q;	//讀取題目
+		cout << M << " " << N << " " << Q << endl;	//提前輸出格式
+		for(int i=0 ; i<M ; i++){
+			cin >> field[i];			//讀取題目陣列
+		}
+		while(Q--){
+			cin >> r >> c;				//讀取中心點座標
+			flag = false;				//旗標初始化
+			for(int i=0 ; i<M || i<N ; i++){	//判斷是否超出外框, <M || <N 可選擇較長邊避免長方形陣列出錯
+				if(r-i<0 || r+i>M || c-i<0 || c+i>N){	// i為距離,判斷是否超出外框
+					cout << 2*i-1 << endl;
+					break;
+				}
+				for(int x=r-i ; x<=r+i ; x++){		// i為距離,掃描正方形內
+					for(int y=c-i ; y<=c+i ; y++){
+						if(field[x][y] != field[r][c]){
+							flag = true;	//如果陣列內資料不一樣代表正方形盡頭,旗標變化
+							break;
+						}
+					}
+				}
+				if(flag){				//如果旗標被變化,即false轉true執行
+					cout << 2*i-1 << endl;
+					break;
+				}
+			}
+		}
+	}
+
+	return 0;
+}

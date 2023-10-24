@@ -1,0 +1,29 @@
+#include <iostream>  //io資料庫
+#include <cmath>     //數學資料庫,開根號要用的
+
+using namespace std;
+int main(){
+	
+	int n = 0;   //輸入讀取
+	int ans = 0; //答案
+	
+	while(cin >> n && n){   //把輸入讀取到n, && n  跟自己and,即讀到0時跳出迴圈
+		ans = 0;        //每輪歸0
+		cout << n << " : ";  //先將題目前半段按照格式print
+		for(int i=2 ; i<=sqrt(n) ; i++){  //0跟1不算質數,i從2開始,sqrt(n)對n開根號
+			if(n%i == 0){		  //如果被整除代表為質因數
+				ans++;		  //答案+1
+			}
+			while(n%i == 0){	  //重複的質因數只能算1次,如果n被i整除則需繼續除,ex:45=3*3*5
+				n = n/i;	  //同上,45/3 == 15,15/3 == 5 5除3除不盡才繼續
+			}
+		}
+		if(n != 1){			  //可能發生最後一個質因數沒加到的情況,故最後如不整除(n!=1)要把ans+1
+			ans++;
+		}
+		cout << ans << endl;		  //把ans print , endl為結束符號
+	}
+
+
+	return 0;
+}

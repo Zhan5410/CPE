@@ -1,0 +1,46 @@
+#include <iostream>		//io資料庫
+#include <map>			//map資料庫,一種資料型態
+using namespace std;
+
+int main(){
+	int r = 0;		//有幾行
+	int c = 0;		//有幾列
+	int k = 1;		//有幾題,從第1題開始
+	int goal = 0;		//有幾顆地雷
+	map<int,map<int,char>> field;		//定義map,可理解為陣列, field[i][j] = '*',看解釋.png,影片10:12
+	while(cin >> r >> c && r){		//讀行列,為0時break
+		cout << "Field #" << k << ":" << endl;		//提前輸出格式
+		k++;						//把題目+1,變第2題
+		
+		for(int i=0 ; i<r ; i++){			//讀取地圖
+			for(int j=0 ; j<c ; j++){
+				cin >> field[i][j];
+			}	
+		}
+		
+		for(int i=0 ; i<r ; i++){			//掃描地圖
+			for(int j=0 ; j<c ; j++){
+			
+				if(field[i][j] == '*'){		//如果是地雷則直接輸出
+					cout << '*';
+					continue;
+				}
+				else{
+					#define field(i,j)(field[i][j]=='*')		//define 函式(條件達成回傳1),影片21:36
+					goal =  field(i-1,j-1) +			//以當前為中心,掃描九宮格
+							field(i-1,j)   +
+							field(i-1,j+1) +
+							field(i,j-1)   +
+							field(i,j)     +
+							field(i,j+1)   +
+							field(i+1,j-1) +
+							field(i+1,j)   +
+							field(i+1,j+1);
+				}
+				cout << goal;						//掃描完print地雷數
+			}
+			cout << endl;							//換行
+		}
+	}
+	return 0;
+}

@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int isPrime(int n){
+	for(int i=2 ; i<=sqrt(n) ; i++){	//判斷質數
+		if(n%i == 0){
+			return 0; // 0 not prime
+		}
+	}
+	return 1;		  // 1 is prime
+}
+
+int main(){
+	int n = 0;
+	while(cin >> n){
+		int flag = 0;			//狀態判斷, 0非質數 , 1質數 , 2反轉質數
+		int temp_n = n;			//暫存的輸入n
+		int temp = 0;			//暫存
+		flag = isPrime(n);		//第一次判斷質數
+		
+		if(flag == 1){			//如果是質數才考慮反轉
+			while(temp_n > 0){			//數字鏡像,123 -> 321
+				temp = temp*10 + temp_n%10;	
+				temp_n = temp_n/10;
+			}
+		
+			if(n != temp){				//題目要求反轉後不能一樣, 88 -> 88 為違規
+				flag = 1 + isPrime(temp);			
+			}	
+		}
+		
+		if(flag == 2){					//輸出, 0非質數 , 1質數 , 2反轉質數
+			cout << n << " is emirp." << endl;
+		}
+		else if(flag == 1){
+			cout << n << " is prime." << endl;
+		}
+		else{
+			cout << n << " is not prime." << endl;
+		}
+	}
+	return 0;
+}

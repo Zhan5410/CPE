@@ -1,0 +1,34 @@
+#include <iostream>		//io資料庫
+using namespace std;
+
+int dtob(int value){		//Decimal TO Binary 十轉二進制
+	int numofone = 0;	//Number OF One 有幾個1
+	while(value >0){
+		if(value % 2 == 1){		//短除法
+			numofone++;
+		}
+		value = value/2;
+	}
+	return numofone;
+}
+
+int htob(int value){		//Hexadecimal TO Binary 十六轉二進制
+	int numofone = 0;
+	while(value>0){
+		int tem = value % 10;		//tem = Temporarily暫時的,這裡是只取個位數
+		numofone = numofone + dtob(tem);	//對個位數做十轉二
+		value = value/10;		//同上,265 % 10 == 5(個位數),265 / 10 == 26(去掉個位數)
+	}
+	return numofone;
+}
+
+int main(){
+	int n = 0;		//n為題目數
+	int value = 0;		//value為題目
+	cin >> n;		//讀取總共幾題
+	while(n--){		
+		cin >> value;	//讀取題目
+		cout << dtob(value)  << " " << htob(value) << endl;	//輸出 
+	}	
+	return 0;
+}
