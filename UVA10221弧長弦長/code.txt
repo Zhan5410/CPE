@@ -1,0 +1,26 @@
+#include <iostream>
+#include <iomanip>		//設定輸出精度
+#include <cmath>
+using namespace std;
+#define PI acos(-1.0)		//define PI , acos(-1.0)為固定,直接宣告3.14159精度不夠
+int main(){
+	double s = 0.0;		//s為地球到衛星距離 , r為地球半徑6440 , R=(r+s) , 以下直接6440.0代替
+	double a = 0.0;		//角度,有兩種單位 , min(分鐘) 跟 deg(度) 
+	string unit = "";	//單位
+	double chord = 0.0;	//弦長
+	double arc = 0.0;	//弧長
+	
+	while(cin >> s >> a >> unit){		//依次輸入 , 讀到空值時格式沒有全符合會自動跳出
+		if(unit == "min"){		//如果單位是min , 轉成deg , deg = min / 60
+			a = a/60;
+		}
+		if(a>180){			//如果角度大於180 , 則看另一半圓較小的角度 , 故 360.0 - a
+			a = 360-a;
+		}
+		arc = 2.0 * PI * (6440.0 + s) * a / 360.0;		//公式： arc = 2 * PI * R * a / 360
+		chord = 2.0 * (6440.0 + s) * cos((90.0 - a / 2) / 180 * PI);		//公式： chord = 2 * R * cos((90-a/2) / 180 * PI)
+		cout << fixed << setprecision(6) << arc << " " << chord << endl; 	//fixed為固定的意思 , set(設定)precision(小數點) , 6為題目要求小數點後6位
+	}
+	
+	return 0;
+}

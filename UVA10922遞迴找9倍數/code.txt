@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+int finddegree(string str,int degree){
+	int temp = 0;
+	for(int i=0 ; i<str.length() ; i++){
+		temp = temp + str[i] - '0';	//字串直接減字串,會轉成ASCII碼運算, 0~9 直接減 0 即可數字差
+	}
+	if(temp == 9){
+		return degree+1;		//總合為九必定為9倍數,深度+1為答案
+	}
+	else if(temp < 9){			//總和<9必定不是倍數, return 0
+		return 0;
+	}
+	else{
+		return finddegree(to_string(temp),degree+1);	//非以上情況,則呼叫自己(遞迴) to_string 強制轉型,深度+1
+	}
+}
+
+int main(){
+	string N = "";				//題目
+	while(cin >> N){
+		if(N == "0"){			//由於是字串,為0不會跳脫,一定要加判斷式
+			break;
+		}
+	
+		int degree = finddegree(N,0);	//呼叫,初始深度為0
+		
+		if(degree == 0){
+			cout << N << " is not a multiple of 9." << endl;	//回傳0表示非倍數
+		}
+		else{
+			cout << N << " is a multiple of 9 and has 9-degree " << degree << "." << endl;
+		}
+	}
+	return 0;
+}
