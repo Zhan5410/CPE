@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+	int T = 0;		//有幾題
+	int N = 0;		//有幾天
+	int P = 0;		//有幾個政黨
+	int h[101];		//各政黨罷工間隔天數,政黨 0<P<=100 ,故陣列101
+	int workingdays = 0;	//罷工的天數
+	
+	cin >> T;
+	while(T--){
+		cin >> N >> P;
+		workingdays = 0;
+		for(int i=0 ; i<P ; i++){
+			cin >> h[i];
+		}
+		
+		for(int i=1 ; i<=N ; i++){
+			if(i%7 == 6 || i%7 == 0){	//題目說禮拜五禮拜六不計算(每個禮拜從禮拜日開始)
+				continue;
+			}
+			for(int j=0  ; j<P ; j++){
+				if(i % h[j] == 0){
+					workingdays++;
+					break;
+				}
+			}
+		}
+		cout << workingdays << endl;
+	}
+	
+	return 0;
+}
