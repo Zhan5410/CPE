@@ -1,0 +1,48 @@
+#include <iostream>
+#include <map>
+using namespace std;
+
+int main(){
+	int t = 0;
+	map<char,string>finger;
+	
+	finger[' '] = "0000000000";		//建構資料表
+	finger['c'] = "0111001111";
+	finger['d'] = "0111001110";
+	finger['e'] = "0111001100";
+	finger['f'] = "0111001000";
+	finger['g'] = "0111000000";
+	finger['a'] = "0110000000";
+	finger['b'] = "0100000000";
+	finger['C'] = "0010000000";
+	finger['D'] = "1111001110";
+	finger['E'] = "1111001100";
+	finger['F'] = "1111001000";
+	finger['G'] = "1111000000";
+	finger['A'] = "1110000000";
+	finger['B'] = "1100000000";
+	
+	cin >> t;				//讀取有幾題
+	cin.ignore();				//清空cin , 一定要加不加出大事
+	while(t--){
+		char pre = ' ';			//上一動
+		char now = ' ';			//現在
+		int press[10] = {};		//十指按壓次數
+		while(cin.get(now),now != '\n'){	//cin.get 可一次讀一個char , 後面為判斷式 : != 換行
+			for(int i=0 ; i<10 ; i++){
+				if(finger[pre][i] == '0' && finger[now][i] == '1'){	//前一動為0 && 現在為1 , 按壓才+1 , 記住 == 後面接char
+					press[i]++;
+				}
+			}
+			pre = now;		//下一輪，此時的 now 成為上一動
+		}
+		
+		for(int i=0 ; i<10 ; i++){
+			if(i){cout << " ";}	// i=0時不印空格 , 0就是false，可以直接這樣寫
+			cout << press[i];	
+		}
+		cout << endl;			//記得補換行符號
+	}
+	
+	return 0;
+}

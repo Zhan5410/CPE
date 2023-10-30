@@ -1,0 +1,31 @@
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <iomanip>	//設定小數點
+using namespace std;
+
+int main(){
+	int n = 0;
+	double count = 0.0;	//預設double後面不用轉型
+	string name = "";
+	map<string,double>trees;
+	cin >> n;
+	getline(cin,name);
+	
+	while(n--){
+		getline(cin,name);	//讀空格
+		
+		while(getline(cin,name) && name != ""){		//讀到空字串時跳出
+			trees[name]++;		//該樹+1
+			count++;		//樹總數+1
+		}
+		
+		for(auto mp:trees){		//輪巡map
+			cout << fixed << setprecision(4);	//固定精確度在小數點後4位
+			cout << mp.first << " " << (mp.second/count)*100 << endl;
+		}
+		
+	}
+	
+	return 0;
+}
