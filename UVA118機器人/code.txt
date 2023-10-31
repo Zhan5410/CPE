@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+int maps[50][50] = {};		//地圖，最大就是50*50
+int fxy[4][2] = {{0,1},{1,0},{0,-1},{-1,0}};	//定義東南西北的"前走一步"
+char pos[5] = "NESW";		//定義東南西北
+
+int main(){
+	int n = 0;		//地圖x範圍
+	int m = 0;		//地圖y範圍
+	int robot_x = 0;	//機器人的x座標
+	int robot_y = 0;	//機器人的y座標
+	int robot_face = 0;	//機器人面向的方向
+	int go_x = 0;		//機器人的下一格x座標
+	int go_y = 0;		//機器人的下一格y座標
+	char face_now = ' ';	//初始狀態面向哪裡
+	string steps = "";	//機器人的指令
+	cin >> n >> m;		//讀範圍
+	
+	for(int i=0 ; i<50 ; i++){		//地圖初始化
+		for(int j=0 ; j<50 ; j++){
+			maps[i][j] = 0;
+		}
+	}
+	
+	while(cin >> robot_x >> robot_y >> face_now){
+		cin >> steps;		//讀指令
+		bool flag = false;	//旗標初始化
+		if(face_now == 'N'){robot_face = 0;}	//初始方向轉數字
+		if(face_now == 'E'){robot_face = 1;}
+		if(face_now == 'S'){robot_face = 2;}
+		if(face_now == 'W'){robot_face = 3;}
+		
+		for(int i=0 ; steps[i] ; i++){
+			if(steps[i] == 'R'){		//R等於右轉，公式影片8:02
+				robot_face = (robot_face + 1) % 4;
+			}
+			else if(steps[i] == 'L'){	//L等於左轉，公式影片8:02
+				robot_face = (robot_face + 3) % 4;
+			}
+			else if(steps[i] == 'F'){	//F等於前進
+				go_x = robot_x + fxy[robot_face][0];	//判斷是哪個方向的"前走一步"
+				go_y = robot_y + fxy[robot_face][1];
+			
+				if(go_x < 0 || go_x > n || go_y < 0 || go_y > m){	//如果機器人"前走一步"後會掉出去
+					if(maps[robot_x][robot_y]){continue;}		//當前位置已被紀錄的話則跳過這一指令
+					else{
+						maps[robot_x][robot_y] = 1;		//紀錄當前位置
+						flag = true;				//旗標轉真
+						break;					//掉出去即結束
+					}
+				}	
+				robot_x = go_x;		//沒掉出去就往前走，改變機器人位置
+				robot_y = go_y;
+			}
+		}
+		cout << robot_x << " " << robot_y << " " << pos[robot_face];
+		if(flag){cout << " LOST";}
+		cout << endl;
+	}
+	
+	return 0;
+}
