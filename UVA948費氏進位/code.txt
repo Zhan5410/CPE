@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+	int fib[39];	//題目要求輸入不會超過1億，即費氏數列不會超過39位
+	int N = 0;	//題目總數
+	int value = 0;	//題目
+	
+	fib[0] = 1;	//費氏的前兩位，最前兩位 0 跟 1 直接忽略不算了
+	fib[1] = 2;
+	
+	cin >> N;	//讀題
+	while(N--){
+		cin >> value;	//讀題
+		cout << value << " = ";		//提前列印格式
+		
+		bool flag = false;		//旗標
+		
+		for(int i=2 ; i<=39 ; i++){	//創費式數列，即前兩位相加，這就是為甚麼0跟1不算直接從1和2開始(第三位 = 0+1=1)
+			fib[i] = fib[i-1] + fib[i-2];
+		}
+		
+		for(int i=39 ; i>=0 ; i--){	//由大到小遍尋
+			if(value >= fib[i]){	//大於即可開始動作(由比她小的數字組成)
+				cout << "1";	//為1，然後減去，重複尋找新的數字由誰組成
+				value = value - fib[i];		//減去
+				flag = true;	//更改旗標，從這裡開始往後可以輸出0了
+			}
+			else if(flag){
+				cout << "0";
+			}
+		}
+		cout << " (fib)" << endl;
+		
+	}
+	
+	return 0;
+}
