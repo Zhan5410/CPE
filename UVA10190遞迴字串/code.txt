@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+string div(int n,int m,string ans){		//遞迴
+	if(n == 1){
+		return ans;			//n == 1即最後答案，直接回傳
+	}
+	if(n%m == 0){
+		return div((n/m) , m , ans + " " + to_string(n/m));	//整除則呼叫自己
+	}
+	else{
+		return "Boring!";		//不整除不符合，直接回傳Boring
+	}
+}
+
+int main(){
+	int n = 0;				//被除數
+	int m = 0;				//除數
+	while(cin >> n >> m){
+		if(n < 2 || m < 2){		//防呆，避免0和1的情形，兩者都會導致當機
+			cout << "Boring!";	
+			continue;
+		}
+		cout << div(n,m,to_string(n)) << endl;	//輸出直接呼叫遞迴(回傳為字串形式)，初始字串可直接將被除數強制轉型
+	}
+	
+	return 0;
+}

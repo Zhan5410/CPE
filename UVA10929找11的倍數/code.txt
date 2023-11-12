@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+	string topic = "";		//題目
+	while(cin >> topic){		//讀題
+		if(topic.length() == 1 && stoi(topic) == 0){		//如果字串長度 == 1 && 轉換成int == 0，代表讀到0，結束
+			break;
+		}
+		else{
+			int even = 0;		//偶數
+			int odd = 0;		//奇數
+			bool flag = true;	
+			for(int i=0 ; i<topic.length() ; i++){
+				if(flag){
+					odd = odd + (int)topic[i]-48;	//奇數位相加，字元轉數字需 -48，ACSII碼不一樣
+				}
+				else{
+					even = even + (int)topic[i]-48;	//偶數位相加，字元轉數字需 -48，ACSII碼不一樣
+				}
+				flag = !flag;				// ! 為 not 閘， !flag 即反向自己
+			}
+			if((odd - even) % 11 == 0){			//奇數位和偶數位的差值 % 11 == 0，即為11的倍數
+				cout << topic << " is a multiple of 11." << endl;
+			}
+			else{
+				cout << topic << " is not a multiple of 11." << endl;
+			}
+		}
+	}
+
+	return 0;
+}
